@@ -24,15 +24,6 @@ import AnimateInOut, {
 import { PrivateDraggable } from '../draggable/draggable-api';
 
 export default function Droppable(props: Props) {
-  console.log('Droppable received props:', {
-    isDropDisabled: props.isDropDisabled,
-    isCombineEnabled: props.isCombineEnabled,
-    ignoreContainerClipping: props.ignoreContainerClipping,
-    type: props.type,
-    mode: props.mode,
-    direction: props.direction
-  });
-  
   // Apply defaults to props before anything else
   const propsWithDefaults = {
     ...props,

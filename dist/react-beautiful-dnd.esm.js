@@ -8236,15 +8236,6 @@ function PublicDraggable(props) {
 }
 
 function Droppable(props) {
-  console.log('Droppable received props:', {
-    isDropDisabled: props.isDropDisabled,
-    isCombineEnabled: props.isCombineEnabled,
-    ignoreContainerClipping: props.ignoreContainerClipping,
-    type: props.type,
-    mode: props.mode,
-    direction: props.direction
-  });
-
   var propsWithDefaults = _extends({}, props, {
     type: props.type || 'DEFAULT',
     mode: props.mode || 'standard',
