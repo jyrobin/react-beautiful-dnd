@@ -34,12 +34,12 @@ export default function Droppable(props: Props) {
     // own props
     children,
     droppableId,
-    type,
-    mode,
-    direction,
-    ignoreContainerClipping,
-    isDropDisabled,
-    isCombineEnabled,
+    type = 'DEFAULT',
+    mode = 'standard',
+    direction = 'vertical',
+    ignoreContainerClipping = false,
+    isDropDisabled = false,
+    isCombineEnabled = false,
     // map props
     snapshot,
     useClone,
@@ -47,7 +47,10 @@ export default function Droppable(props: Props) {
     updateViewportMaxScroll,
 
     // clone (ownProps)
-    getContainerForClone,
+    getContainerForClone = () => {
+      invariant(document.body, 'document.body is not ready');
+      return document.body;
+    },
   } = props;
 
   const getDroppableRef = useCallback(

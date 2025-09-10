@@ -1,6 +1,4 @@
 // @flow
-// eslint-disable-next-line no-unused-vars
-import { Component } from 'react';
 import { connect } from 'react-redux';
 import memoizeOne from 'memoize-one';
 import { invariant } from '../../invariant';
@@ -19,7 +17,6 @@ import type {
 import type {
   MapProps,
   OwnProps,
-  DefaultProps,
   Selector,
   DispatchProps,
   StateSnapshot,
@@ -227,29 +224,9 @@ const mapDispatchToProps: DispatchProps = {
   updateViewportMaxScroll: updateViewportMaxScrollAction,
 };
 
-function getBody(): HTMLElement {
-  invariant(document.body, 'document.body is not ready');
-  return document.body;
-}
-
-const defaultProps = ({
-  mode: 'standard',
-  type: 'DEFAULT',
-  direction: 'vertical',
-  isDropDisabled: false,
-  isCombineEnabled: false,
-  ignoreContainerClipping: false,
-  renderClone: null,
-  getContainerForClone: getBody,
-}: DefaultProps);
-
-// Abstract class allows to specify props and defaults to component.
-// All other ways give any or do not let add default props.
-// eslint-disable-next-line
+// Flow type for the connected component
 /*::
-class DroppableType extends Component<OwnProps> {
-  static defaultProps = defaultProps;
-}
+type DroppableType = React$ComponentType<OwnProps>;
 */
 
 // Leaning heavily on the default shallow equality checking
@@ -274,7 +251,5 @@ const ConnectedDroppable: typeof DroppableType = connect(
     areStatePropsEqual: isStrictEqual,
   },
 )(Droppable);
-
-ConnectedDroppable.defaultProps = defaultProps;
 
 export default ConnectedDroppable;
