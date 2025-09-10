@@ -32,15 +32,15 @@ const shared: CheckFn[] = [
   function boolean({ props }: Args) {
     invariant(
       isBoolean(props.isDropDisabled),
-      'isDropDisabled must be a boolean',
+      `isDropDisabled must be a boolean. Received: ${typeof props.isDropDisabled} (${props.isDropDisabled})`,
     );
     invariant(
       isBoolean(props.isCombineEnabled),
-      'isCombineEnabled must be a boolean',
+      `isCombineEnabled must be a boolean. Received: ${typeof props.isCombineEnabled} (${props.isCombineEnabled})`,
     );
     invariant(
       isBoolean(props.ignoreContainerClipping),
-      'ignoreContainerClipping must be a boolean',
+      `ignoreContainerClipping must be a boolean. Received: ${typeof props.ignoreContainerClipping} (${props.ignoreContainerClipping})`,
     );
   },
   function ref({ getDroppableRef }: Args) {

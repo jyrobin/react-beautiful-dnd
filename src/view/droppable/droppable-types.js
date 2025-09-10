@@ -74,16 +74,41 @@ export type DispatchProps = {|
 |};
 
 export type OwnProps = {|
-  ...DefaultProps,
+  // Required props
   children: (Provided, StateSnapshot) => Node,
   droppableId: DroppableId,
-  renderClone: ?DraggableChildrenFn,
+  
+  // Optional props with defaults
+  mode?: DroppableMode,
+  type?: TypeId,
+  isDropDisabled?: boolean,
+  isCombineEnabled?: boolean,
+  direction?: Direction,
+  renderClone?: ?DraggableChildrenFn,
+  ignoreContainerClipping?: boolean,
+  getContainerForClone?: () => HTMLElement,
 |};
 
 export type Props = {|
+  // Required props
+  children: (Provided, StateSnapshot) => Node,
+  droppableId: DroppableId,
+  
+  // Optional props with defaults  
+  mode?: DroppableMode,
+  type?: TypeId,
+  isDropDisabled?: boolean,
+  isCombineEnabled?: boolean,
+  direction?: Direction,
+  renderClone?: ?DraggableChildrenFn,
+  ignoreContainerClipping?: boolean,
+  getContainerForClone?: () => HTMLElement,
+  
+  // Map props from Redux
   ...MapProps,
+  
+  // Dispatch props from Redux
   ...DispatchProps,
-  ...OwnProps,
 |};
 
 // Having issues getting the correct type

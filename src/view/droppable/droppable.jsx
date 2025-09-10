@@ -24,6 +24,30 @@ import AnimateInOut, {
 import { PrivateDraggable } from '../draggable/draggable-api';
 
 export default function Droppable(props: Props) {
+  console.log('Droppable received props:', {
+    isDropDisabled: props.isDropDisabled,
+    isCombineEnabled: props.isCombineEnabled,
+    ignoreContainerClipping: props.ignoreContainerClipping,
+    type: props.type,
+    mode: props.mode,
+    direction: props.direction
+  });
+  
+  // Apply defaults to props before anything else
+  const propsWithDefaults = {
+    ...props,
+    type: props.type || 'DEFAULT',
+    mode: props.mode || 'standard',
+    direction: props.direction || 'vertical',
+    ignoreContainerClipping: props.ignoreContainerClipping !== undefined ? props.ignoreContainerClipping : false,
+    isDropDisabled: props.isDropDisabled !== undefined ? props.isDropDisabled : false,
+    isCombineEnabled: props.isCombineEnabled !== undefined ? props.isCombineEnabled : false,
+    getContainerForClone: props.getContainerForClone || (() => {
+      invariant(document.body, 'document.body is not ready');
+      return document.body;
+    }),
+  };
+  
   const appContext: ?AppContextValue = useContext<?AppContextValue>(AppContext);
   invariant(appContext, 'Could not find app context');
   const { contextId, isMovementAllowed } = appContext;
@@ -34,12 +58,12 @@ export default function Droppable(props: Props) {
     // own props
     children,
     droppableId,
-    type = 'DEFAULT',
-    mode = 'standard',
-    direction = 'vertical',
-    ignoreContainerClipping = false,
-    isDropDisabled = false,
-    isCombineEnabled = false,
+    type,
+    mode,
+    direction,
+    ignoreContainerClipping,
+    isDropDisabled,
+    isCombineEnabled,
     // map props
     snapshot,
     useClone,
@@ -47,11 +71,8 @@ export default function Droppable(props: Props) {
     updateViewportMaxScroll,
 
     // clone (ownProps)
-    getContainerForClone = () => {
-      invariant(document.body, 'document.body is not ready');
-      return document.body;
-    },
-  } = props;
+    getContainerForClone,
+  } = propsWithDefaults;
 
   const getDroppableRef = useCallback(
     (): ?HTMLElement => droppableRef.current,
@@ -69,7 +90,7 @@ export default function Droppable(props: Props) {
   }, []);
 
   useValidation({
-    props,
+    props: propsWithDefaults,
     getDroppableRef,
     getPlaceholderRef,
   });
@@ -94,8 +115,8 @@ export default function Droppable(props: Props) {
 
   const placeholder: Node = (
     <AnimateInOut
-      on={props.placeholder}
-      shouldAnimate={props.shouldAnimatePlaceholder}
+      on={propsWithDefaults.placeholder}
+      shouldAnimate={propsWithDefaults.shouldAnimatePlaceholder}
     >
       {({ onClose, data, animate }: AnimateProvided) => (
         <Placeholder

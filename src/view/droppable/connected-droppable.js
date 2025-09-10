@@ -135,8 +135,8 @@ export const makeMapStateToProps = (): Selector => {
     // not checking if item is disabled as we need the home list to display a placeholder
 
     const id: DroppableId = ownProps.droppableId;
-    const type: TypeId = ownProps.type;
-    const isEnabled: boolean = !ownProps.isDropDisabled;
+    const type: TypeId = ownProps.type || 'DEFAULT';
+    const isEnabled: boolean = !(ownProps.isDropDisabled || false);
     const renderClone: ?DraggableChildrenFn = ownProps.renderClone;
 
     if (state.isDragging) {
